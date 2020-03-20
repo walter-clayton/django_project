@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-import django_heroku
+# import django_heroku
 import os
 
 
@@ -21,13 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'wjk1%4%bs(6ek%x^lsj=u58-(p5p)$ff!7lx%lfv!*(qol1-6+'
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'wjk1%4%bs(6ek%x^lsj=u58-(p5p)$ff!7lx%lfv!*(qol1-6+'
+# SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.getenv('DEBUG_VALUE') == 'True')
+DEBUG = True
 
-ALLOWED_HOSTS = ['stark-taiga-57830.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -149,11 +149,11 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-
+print(AWS_ACCESS_KEY_ID)
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_S3_REGION_NAME = 'eu-west-2'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
