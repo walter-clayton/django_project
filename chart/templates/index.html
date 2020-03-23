@@ -161,7 +161,7 @@
                 <th scope="row">${chart.chart_id}</th>
                 <td>${chart.date_posted}</td>
                 <td>${chart.chart_assets}</td>
-                <td>${chart.chart_liabilities</td>
+                <td>${chart.chart_liabilities}</td>
                 <td>${chart.chart_networth}</td>
                 <td>
                   <button class="btn btn-info" v-on:click="getChart(chart.chart_id)">Edit</button>
@@ -183,6 +183,14 @@
                 <form v-on:submit.prevent="addChart()">
                 <div class="modal-body">
                     <div class="form-group">
+                      <label for="chart_assets">DATE POSTED</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        v-model="newChart.date_posted"
+                        required="required" >
+                    </div>
+                    <div class="form-group">
                       <label for="chart_assets">ASSETS</label>
                       <input
                         type="number"
@@ -203,6 +211,17 @@
                         required="required"
                         >
                     </div>
+                    <div class="form-group">
+                      <label for="chart_body">NET WORTH</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="chart_networth"
+                        placeholder="Enter Chart Body"
+                        v-model="newChart.chart_networth"
+                        required="required"
+                        >
+                    </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
@@ -219,7 +238,7 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">EDIT ARTICLE</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">EDIT BALANCE</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -227,26 +246,45 @@
                 <form v-on:submit.prevent="updateChart()">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="chart_assets">ASSETS</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="chart_assets"
-                          placeholder="Enter assets"
-                          v-model="newChart.chart_assets"
-                          required="required" >
-                      </div>
-                      <div class="form-group">
-                        <label for="chart_body">LIABILITIES</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="chart_liabilities"
-                          placeholder="Enter Chart Body"
-                          v-model="newChart.chart_liabilities"
-                          required="required"
-                          >
-                      </div>
+                      <label for="chart_assets">DATE POSTED</label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        v-model="currentChart.date_posted"
+                        required="required" >
+                    </div>
+                    <div class="form-group">
+                      <label for="chart_assets">ASSETS</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="chart_assets"
+                        placeholder="Enter assets"
+                        v-model="currentChart.chart_assets"
+                        required="required" >
+                    </div>
+                    <div class="form-group">
+                      <label for="chart_body">LIABILITIES</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="chart_liabilities"
+                        placeholder="Enter Chart Body"
+                        v-model="currentChart.chart_liabilities"
+                        required="required"
+                        >
+                    </div>
+                    <div class="form-group">
+                      <label for="chart_body">NET WORTH</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="chart_networth"
+                        placeholder="Enter Chart Body"
+                        v-model="currentChart.chart_networth"
+                        required="required"
+                        >
+                    </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary m-progress" data-dismiss="modal">Close</button>
