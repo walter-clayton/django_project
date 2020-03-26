@@ -15,18 +15,22 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-header-title">
-                    ${ product }
+                    ${ title }
                 </div> 
             </div>
                 <div class="card-content">
                     <p class="title is-4">CURRENCIES</p>
-                    <div class="media"  v-for="currency in currencies":key="currency.currencyId">
-                        <button class="button" @click="changeCurrency(currency.currencyName, currency.currencyIcon, currency.currencyValue)">Change currency</button>
-                        <div class="media-left">
-                            <i v-bind:class="currency.currencyIcon" aria-hidden="true"></i>
+                    <div class="columns">
+                        <div class="column">
+                            <button class="button"  v-for="(currency, index) in currencies":key="currency.currencyId" @click="changeCurrency(index)">Change currency</button>
                         </div>
-                        <div class="media-content">
-                            <p  class="subtitle is-6">${ currency.currencyName }</p>
+                        <div class="column">
+                            <div class="media-left">
+                                <i v-bind:class="icon" aria-hidden="true"></i>
+                            </div>
+                            <div class="media-content">
+                                <p  class="subtitle is-6">${ name }</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -37,7 +41,7 @@
                                     <div class="columns">
                                         <div class="column">
                                           <p class="heading">ASSETS </p>
-                                          <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ assets_count = assets + count_assets }</p>
+                                          <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ value_asset }</p>
                                           <div class="column">
                                               <button class="button" v-on:click="count_assets +=1">+</button>
                                               <button class="button" v-on:click="count_assets -=1">-</button>
@@ -53,7 +57,7 @@
                                     <div class="columns">
                                         <div class="column">
                                           <p class="heading">LIABILITIES </p>
-                                          <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ liabilities_count = liabilities + count}</p>
+                                          <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ value_liability}</p>
                                           <div class="column">
                                               <button class="button" v-on:click="count +=1">+</button>
                                               <button class="button" v-on:click="count -=1">-</button>
@@ -63,22 +67,22 @@
                                 </div>
                             </nav>
                         </div>
-                        <div  v-if=" assets_count < liabilities_count"  style="background-color: #ECA6A6;" class="card-footer-item">
+                        <div  v-if=" value_asset < value_liability"  style="background-color: #ECA6A6;" class="card-footer-item">
                             <nav class="level">
                                 <div class="level-item has-text-centered">
                                   <div>
                                     <p class="heading">NET WORTH </p>
-                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ (assets + count_assets) - (liabilities + count)}</p>
+                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
                                   </div>
                                 </div>
                             </nav>
                         </div>
-                        <div  v-else-if=" assets_count  == liabilities_count "  style="background-color: #FFD850;" class="card-footer-item">
+                        <div  v-else-if=" value_asset == value_liability "  style="background-color: #FFD850;" class="card-footer-item">
                             <nav class="level">
                                 <div class="level-item has-text-centered">
                                   <div>
                                     <p class="heading">NET WORTH </p>
-                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ (assets + count_assets) - (liabilities + count)}</p>
+                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
                                   </div>
                                 </div>
                             </nav>
@@ -88,7 +92,7 @@
                                 <div class="level-item has-text-centered">
                                   <div>
                                     <p class="heading">NET WORTH </p>
-                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ (assets + count_assets) - (liabilities + count)}</p>
+                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
                                   </div>
                                 </div>
                             </nav>
@@ -104,7 +108,7 @@
         <!-- Individual components -->
         <script src="https://unpkg.com/buefy/dist/components/table"></script>
         <script src="https://unpkg.com/buefy/dist/components/input"></script>
-        
+        <script src="main.js"></script>
     <script>
         new Vue ({
             el: '#app',
@@ -112,26 +116,23 @@
             data: {
                 product: "Balance",
                 id: 0,
-                name: "Currency",
-                icon: "fa fa-dollar",
-                value: 0,
                 currencies: [
                     {
                         currencyId: 1,
                         currencyName: "Bitcoin",
-                        currencyIcon: "fa fa-btc fa-2x",
-                        currencyValue: 6458.62
+                        currencyIcon: "fa fa-btc",
+                        currencyValue: 0.000151
                     },
                     {
                         currencyId: 2,
                         currencyName: "Euro",
-                        currencyIcon: "fa fa-euro fa-2x",
+                        currencyIcon: "fa fa-euro",
                         currencyValue: 1.07
                     },
                     {
                         currencyId: 3,
                         currencyName: "Dollar",
-                        currencyIcon: "fa fa-dollar fa-2x",
+                        currencyIcon: "fa fa-dollar",
                         currencyValue: 1
                     },
                 ],
@@ -142,16 +143,35 @@
                 inDebt: true,
                 count_assets: 0,
                 count: 0,
+                selectedCurrency: 0,
             },
             methods: {
-                changeCurrency: function(count, currencyId, currencyName, currencyIcon, currencyValue) {
-                    while ( count <= 3) {
-                        this.count += 1
-                        this.name = currencyName
-                        this.icon = currencyIcon
-                        this.value = currencyValue
+                changeCurrency(index) {
+                        this.selectedCurrency = index
                     }
-                }
+                },
+            computed: {
+                title() {
+                    return this.product
+                },
+                icon() {
+                    return this.currencies[this.selectedCurrency].currencyIcon
+                },
+                name() {
+                    return this.currencies[this.selectedCurrency].currencyName
+                },
+                value_liability() {
+                    value = (this.liabilities + this.count) * this.currencies[this.selectedCurrency].currencyValue
+                   return value
+                   console.log(value)
+                },
+                value_asset() {
+                   return (this.assets + this.count_assets) * this.currencies[this.selectedCurrency].currencyValue
+                },
+                networth() {
+                    networth = ((this.assets + this.count_assets) - (this.liabilities + this.count)) * this.currencies[this.selectedCurrency].currencyValue
+                    return networth
+                },
             }
         })
     </script>
