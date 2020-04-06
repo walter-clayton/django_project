@@ -10,94 +10,118 @@
     
 
 </head>
-<body>
-    <div id="app">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-header-title">
-                    ${ title }
-                </div> 
-            </div>
-                <div class="card-content">
-                    <p class="title is-4">CURRENCIES</p>
-                    <div class="columns">
-                        <div class="column">
-                            <button class="button"  v-for="(currency, index) in currencies":key="currency.currencyId" @click="changeCurrency(index)">Change currency</button>
-                        </div>
-                        <div class="column">
-                            <div class="media-left">
-                                <i v-bind:class="icon" aria-hidden="true"></i>
-                            </div>
-                            <div class="media-content">
-                                <p  class="subtitle is-6">${ name }</p>
-                            </div>
-                        </div>
-                    </div>
+
+<body v-bind:style="Black">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Color Theme
+                </a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" class="button"  v-for="(theme, index) in themes":key="theme.themeId" @click="changeTheme(index)">
+                        Change Theme: ${ colorTheme }
+                    </a>
                 </div>
-                    <div class="card-footer">
-                        <div class="card-footer-item ">
-                            <nav class="level column">
-                                <div class="level-item has-text-centered">
-                                    <div class="columns">
-                                        <div class="column">
-                                          <p class="heading">ASSETS </p>
-                                          <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ value_asset }</p>
-                                          <div class="column">
-                                              <button class="button" v-on:click="count_assets +=1">+</button>
-                                              <button class="button" v-on:click="count_assets -=1">-</button>
-                                          </div>
+            </div>
+            </div>
+        </div>
+      </nav>
+    <div id="app">
+        <div class="container ">
+            <div class="colunns is-variable is-8">
+                <div class="column">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                ${ title }
+                            </div> 
+                        </div>
+                            <div class="card-content">
+                                <p class="title is-4">CURRENCIES</p>
+                                <div class="columns">
+                                    <div class="column">
+                                        <button class="button" @click="changeCurrency()">${ name } </button>
+                                    </div>
+                                    <div class="column">
+                                        <div class="media-left">
+                                            <i v-bind:class="icon" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="media-content">
+                                            <p  class="subtitle is-6">${ name }</p>
                                         </div>
                                     </div>
                                 </div>
-                            </nav>
-                        </div>
-                        <div class="card-footer-item">
-                            <nav class="level column">
-                                <div class="level-item has-text-centered">
-                                    <div class="columns">
-                                        <div class="column">
-                                          <p class="heading">LIABILITIES </p>
-                                          <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ value_liability}</p>
-                                          <div class="column">
-                                              <button class="button" v-on:click="count +=1">+</button>
-                                              <button class="button" v-on:click="count -=1">-</button>
-                                          </div>
-                                        </div>
+                            </div>
+                                <div class="card-footer">
+                                    <div class="card-footer-item ">
+                                        <nav class="level column">
+                                            <div class="level-item has-text-centered">
+                                                <div class="columns">
+                                                    <div class="column">
+                                                      <p class="heading">ASSETS </p>
+                                                      <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ value_asset }</p>
+                                                      <div class="column">
+                                                          <button class="button" v-on:click="count_assets +=1">+</button>
+                                                          <button class="button" v-on:click="count_assets -=1">-</button>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                    <div class="card-footer-item">
+                                        <nav class="level column">
+                                            <div class="level-item has-text-centered">
+                                                <div class="columns">
+                                                    <div class="column">
+                                                      <p class="heading">LIABILITIES </p>
+                                                      <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ value_liability}</p>
+                                                      <div class="column">
+                                                          <button class="button" v-on:click="count +=1">+</button>
+                                                          <button class="button" v-on:click="count -=1">-</button>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                    <div  v-if=" value_asset < value_liability"  style="background-color: #ECA6A6;" class="card-footer-item">
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered">
+                                              <div>
+                                                <p class="heading">NET WORTH </p>
+                                                <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
+                                              </div>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                    <div  v-else-if=" value_asset == value_liability "  style="background-color: #FFD850;" class="card-footer-item">
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered">
+                                              <div>
+                                                <p class="heading">NET WORTH </p>
+                                                <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
+                                              </div>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                    <div  v-else style="background-color: #B3F4B6;" class="card-footer-item">
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered">
+                                              <div>
+                                                <p class="heading">NET WORTH </p>
+                                                <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
+                                              </div>
+                                            </div>
+                                        </nav>
                                     </div>
                                 </div>
-                            </nav>
                         </div>
-                        <div  v-if=" value_asset < value_liability"  style="background-color: #ECA6A6;" class="card-footer-item">
-                            <nav class="level">
-                                <div class="level-item has-text-centered">
-                                  <div>
-                                    <p class="heading">NET WORTH </p>
-                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
-                                  </div>
-                                </div>
-                            </nav>
-                        </div>
-                        <div  v-else-if=" value_asset == value_liability "  style="background-color: #FFD850;" class="card-footer-item">
-                            <nav class="level">
-                                <div class="level-item has-text-centered">
-                                  <div>
-                                    <p class="heading">NET WORTH </p>
-                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
-                                  </div>
-                                </div>
-                            </nav>
-                        </div>
-                        <div  v-else style="background-color: #B3F4B6;" class="card-footer-item">
-                            <nav class="level">
-                                <div class="level-item has-text-centered">
-                                  <div>
-                                    <p class="heading">NET WORTH </p>
-                                    <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> ${ networth }</p>
-                                  </div>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -136,6 +160,10 @@
                         currencyValue: 1
                     },
                 ],
+                Black: {
+                    color: "white",
+                    backgroundColor: "black"
+                },
                 liabilities: 0,
                 assets: 0,
                 assets_count: 0,
@@ -146,9 +174,13 @@
                 selectedCurrency: 0,
             },
             methods: {
-                changeCurrency(index) {
-                        this.selectedCurrency = index
-                    }
+                    changeCurrency() {
+                        for (i = 0; i < this.currencies.length; i++){
+                               
+                               return this.selectedCurrency += this.currencies[1]
+                                   
+                               }
+                       }
                 },
             computed: {
                 title() {
