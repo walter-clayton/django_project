@@ -175,12 +175,17 @@
             },
             methods: {
                     changeCurrency() {
-                        for (i = 0; i < this.currencies.length; i++){
-                               
-                               return this.selectedCurrency += this.currencies[1]
-                                   
-                               }
-                       }
+                             var  len = this.currencies.length
+                             if ( this.selectedCurrency < (len-1)){
+                                this.selectedCurrency += 1 
+                               return  len[this.selectedCurrency]
+                                             }
+                                else {
+                                    this.selectedCurrency = 0
+                                }                         
+
+                            }
+
                 },
             computed: {
                 title() {
