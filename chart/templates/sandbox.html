@@ -43,14 +43,13 @@
                                 <p class="title is-4">CURRENCIES</p>
                                 <div class="columns">
                                     <div class="column">
-                                        <button class="button" @click="changeCurrency()">${ name } </button>
-                                    </div>
-                                    <div class="column">
-                                        <div class="media-left">
-                                            <i v-bind:class="icon" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="media-content">
-                                            <p  class="subtitle is-6">${ name }</p>
+                                        <div class="column">
+                                        <p class="heading">  ${ name } </p>
+                                            <p class="title"><i v-bind:class="icon" aria-hidden="true" class=""> </i> </p>
+                                            <div class="column">
+                                                <button class="button" v-on:click="goBack()"><i class="fa fa-chevron-left"> </i></button>
+                                                <button class="button" @click="goForward()"><i class="fa fa-chevron-right"> </i></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -151,13 +150,19 @@
                         currencyId: 2,
                         currencyName: "Euro",
                         currencyIcon: "fa fa-euro",
-                        currencyValue: 1.07
+                        currencyValue: 0.92
                     },
                     {
                         currencyId: 3,
                         currencyName: "Dollar",
                         currencyIcon: "fa fa-dollar",
                         currencyValue: 1
+                    },
+                    {
+                        currencyId: 4,
+                        currencyName: "Yen",
+                        currencyIcon: "fa fa-yen",
+                        currencyValue: 108.87
                     },
                 ],
                 Black: {
@@ -174,8 +179,10 @@
                 selectedCurrency: 0,
             },
             methods: {
-                    changeCurrency() {
+                    goForward() {
                              var  len = this.currencies.length
+                             console.log(this.selectedCurrency)
+
                              if ( this.selectedCurrency < (len-1)){
                                 this.selectedCurrency += 1 
                                return  len[this.selectedCurrency]
@@ -184,7 +191,22 @@
                                     this.selectedCurrency = 0
                                 }                         
 
-                            }
+                            },
+                    goBack() {
+                             var  len = this.currencies.length
+                                console.log(this.selectedCurrency)
+
+                             if ( this.selectedCurrency == 0){
+                                 
+                                return this.selectedCurrency = (len -1)
+                                    console.log(this.selectedCurrency)
+
+                                             }                        
+                            else {
+                                  return this.selectedCurrency = this.selectedCurrency -1
+                                    console.log(this.selectedCurrency)
+                                    }
+                            },
 
                 },
             computed: {
